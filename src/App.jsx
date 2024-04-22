@@ -1,48 +1,94 @@
 import React, { useState } from 'react';
 import './App.css';
-import goback from './goback.svg'
-
-function Click_Main(text, setChosenOption) {
-  return (
-    <button onClick={() => setChosenOption(text)}>{text}</button>
-  );
-}
+import goback from './goback.svg';
+import waschm from './waschmaschine.png';
+import schrauben from './schrauben.png';
+import welding from './welding.png';
+import { Footer } from './Footer';
 
 function App() {
-  const [chosenOption, setChosenOption] = useState(null);
-  const [buttons, setButtons] = useState([]);
+  const [currentPage, setCurrentPage] = useState("Home");
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [selectedSubtopic, setSelectedSubtopic] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleClick = (text) => {
-    if (!chosenOption) {
-      setButtons([...buttons, text]);
-      setChosenOption(text);
-    }
+  const handleTopicClick = (topic) => {
+    setCurrentPage("Subtopics");
+    setSelectedTopic(topic);
+    setSelectedSubtopic(null);
+    setSelectedOption(null);
+  };
+
+  const handleSubtopicClick = (subtopic) => {
+    setCurrentPage("Options");
+    setSelectedSubtopic(subtopic);
+    setSelectedOption(null);
+  };
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setCurrentPage("Image");
+    document.getElementById("header").innerHTML = option
   };
 
   const handleGoBack = () => {
-    setChosenOption(null);
-    setButtons([]);
+    if (currentPage === "Image") {
+      setCurrentPage("Options");
+      setSelectedOption(null);
+      document.getElementById("header").innerHTML = "Wähle eine Option"
+    } else if (currentPage === "Options") {
+      setCurrentPage("Subtopics");
+      setSelectedSubtopic(null);
+    } else if (currentPage === "Subtopics") {
+      setCurrentPage("Home");
+      setSelectedTopic(null);
+    }
   };
 
   return (
     <div className="App">
-      <h1 className='header justify'>Wähle eine Option</h1>
-      <div className='justify table'>
-        {chosenOption ? (
-          <button onClick={handleGoBack} className='smaller-btn white-border fixed' >Zurück{" "}<img className='icon' src={goback}/></button>
-        ) : (
-          <>
-            <button onClick={() => handleClick("Button 1")} className='button' >Option 1</button>
-            <button onClick={() => handleClick("Button 2")} className='button' >Option 2</button>
-            <button onClick={() => handleClick("Button 3")} className='button' >Option 3</button>
-          </>
-        )}
-        {buttons.map((buttonText, index) => (
-          <div  className='justify' key={index}>
-            <button className='button'>{buttonText}</button>
-          </div>
-        ))}
-      </div>
+      <body>
+        <h1 className='header justify' id='header'>Wähle eine Option</h1>
+        <div className='justify table'>
+          {currentPage === "Home" && (
+            <>
+              <button onClick={() => handleTopicClick("Topic One")} className='button'>Haushalt</button>
+              <button onClick={() => handleTopicClick("Topic Two")} className='button'>Topic 2</button>
+              <button onClick={() => handleTopicClick("Topic Three")} className='button'>Topic 3</button>
+            </>
+          )}
+          {currentPage === "Subtopics" && (
+            <>
+              <h2 className='header justify'>{selectedTopic}</h2>
+              <button onClick={() => handleSubtopicClick("Subtopic One")} className='button'>Waschmaschine</button>
+              <button onClick={() => handleSubtopicClick("Subtopic Two")} className='button'>Subtopic 2</button>
+              <button onClick={() => handleSubtopicClick("Subtopic Three")} className='button'>Subtopic 3</button>
+              <button onClick={handleGoBack} className='smaller-btn btn-right'>Zurück{" "}<img className='icon' alt='back' src={goback}/></button>
+            </>
+          )}
+          {currentPage === "Options" && (
+            <>
+              <h2 className='header justify'>{selectedSubtopic}</h2>
+              <button onClick={() => handleOptionClick("Schweißen")} className='button'>Schweißen</button>
+              <button onClick={() => handleOptionClick("Schrauben")} className='button'>Schrauben</button>
+              <button onClick={() => handleOptionClick("Bauplan")} className='button'>Bauplan</button>
+              <button onClick={handleGoBack} className='smaller-btn btn-right'>Zurück{" "}<img className='icon' alt='back' src={goback}/></button>
+            </>
+          )}
+          {(currentPage === "Image" && selectedOption) && (
+            <>
+              <img className='picture' src={selectedOption === "Schweißen" ? welding : selectedOption === "Schrauben" ? schrauben : waschm} alt="bild" />
+              <p>Pictures are from  <a className='link' href='https://www.flaticon.com/' target="_blank" rel="noreferrer">Flaticon</a></p>
+              <button onClick={handleGoBack} className='smaller-btn btn-right'>Zurück{" "}<img className='icon' alt='back' src={goback}/></button>
+            </>
+          )}
+        </div>
+        <div className='move'>
+          <p className='justify'>DISCLAIMER: This is just a test project and doesnt has any use</p>
+          <p className='justify'>HAFTUNGSAUSSCHLUSS: Dies ist nur ein Testprojekt und hat keinen Nutzen</p>
+        </div>
+      </body>
+      <Footer />
     </div>
   );
 }

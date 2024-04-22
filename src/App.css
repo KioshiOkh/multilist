@@ -1,15 +1,39 @@
 *{
-  background-color: teal;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  scroll-behavior: smooth;
+}
+body{
+  background-color: rgb(77, 90, 90);
+
 }
 
-.fixed{
+.btn-right{
   position: fixed;
-  left: 25%;
+  right: max(100% - 95%);
+  top: max(100% - 99%);
 }
 
 .App {
   text-align: center;
+}
+.Footer{
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(39, 45, 45);
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 5vh;
+  color: #f2f2f2;
+}
+.baseline{
+  margin-bottom: -10px;
+}
+ 
+
+.link{
+  text-decoration: solid;
+  color: darkorange;
 }
 
 .header{
@@ -32,30 +56,38 @@
   width: 200px;
   font-size: larger;
   padding: 12px 0px 32px 0px;
+  margin-bottom: 20px;
   border-radius: 7px;
 }
 .button:hover{
   background-color: rgb(28, 28, 28);
 }
 
+.picture{
+  max-width: fit-content;
+  margin-top: 20%;
+}
+
 .smaller-btn{
   height: 40px;
   width: 150px;
-  background-color: blue;
+  background-color: rgb(100, 100, 117);
   color: #f2f2f2;
   cursor: pointer;
   text-decoration: none;
   padding: 12px 0px 32px 0px;
   border-radius: 7px;
   font-size: larger;
+  border: none;
+  box-shadow: #383737 1px 2px;
 }
 .smaller-btn:hover{
-  background-color: rgb(3, 3, 98);
+  background-color: rgb(47, 47, 57);
 }
 
-.white-border{
+ /* .white-border{
   border: #f2f2f2 3px solid;
-}
+}  */
 
 .icon{
   width: 16px;
@@ -68,4 +100,9 @@
   display:flex;
   flex-direction: column;
   height: 250px;
+}
+
+.move{
+  position: relative;
+  margin-top: 20%;
 }
